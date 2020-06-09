@@ -19,11 +19,90 @@ html, body {
     object-fit: cover;
 }
 
-td {
+#new {
     font-size: 2rem;
+    position: absolute;
+    top: 13rem;
+    left: 50%;
+    border-radius: 50%;
+    width: 6rem;
+    height: 6rem;
 }
 
-.title, .status {
+#new:focus {
+    box-shadow: none;
+}
+
+#instructions {
+    margin: 1rem;
+    letter-spacing: .02rem;
+    text-align: center;
+    opacity: 0.9;
+    font-size: 1.6rem;
+    font-style: italic;
+}
+
+#instructions span {
+    font-weight: 700;
+}
+
+#table {
+    font-size: 1.7rem;
+}
+
+.title {
     cursor: pointer;
     color: blue;
+}
+
+.btn {
+    font-size: 1.5rem;
+}
+
+
+#form-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+#form-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    width: 50rem;
+    height: auto;
+    border-radius: 1rem;
+    margin: 15% auto;
+    padding: 0 1rem;
+}
+
+#close {
+    cursor: pointer;
+    user-select: none;
+    font-size: 3rem;
+    align-self: flex-end;
+}
+
+#form {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+}
+
+input, select {
+    margin: .5rem 0;
+}
+
+#btn {
+    margin: 2rem 0;
+}
+
+.status {
+    width: 20%;
 }

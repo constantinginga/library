@@ -1,12 +1,9 @@
 // TO-DO
-// dropdown for status (not read, in progress, finished)
-// Add button below to add new book
 // when clicked, darken background and show form pop-up
-// add animations/transitions
-// get inspiration from notion table/tags (for each status add tag design - red, green, yellow backgrounds)
-// use bootstrap?
-
-
+// add animations/transitions to table, modal
+// choose font
+// customize table and modal
+// hide modal after adding book
 
 let myLibrary = [];
 
@@ -28,16 +25,24 @@ Book.prototype.changeStatus = function() {
 }
 
 
+function capitalize(word) {
+    return word[0].toUpperCase() + word.slice(1);
+}
+
+
 // add new book object to array
 function addBookToLibrary() {
     if (!title.value || !author.value || !pages.value || !isRead.value) return;
     myLibrary.push(new Book(title.value, author.value, pages.value, isRead.options[isRead.selectedIndex].text));
+
 }
 
 
 // display books in a table
 function render() {
     table.innerHTML = '';
+    if (myLibrary.length != 0) generateTableHead();
+    const tbody = document.createElement('tbody');
     for (let i = 0; i < myLibrary.length; i++) {
         const bookRow = document.createElement('tr');
         bookRow.dataset.index = i;
@@ -45,12 +50,14 @@ function render() {
             if (key != 'changeStatus') {
                 const bookCell = document.createElement('td');
                 bookCell.classList.add(key);
-                bookCell.innerHTML = myLibrary[i][key];
+                (key === 'status') ? bookCell.innerHTML = `<span class="btn ${assignColor(myLibrary[i][key])}">${myLibrary[i][key]}</span>`
+                : bookCell.innerHTML = myLibrary[i][key];
                 bookRow.appendChild(bookCell);
+            }
         }
-        }
-        table.appendChild(bookRow);
+        tbody.appendChild(bookRow);
     }
+    table.append(tbody);
     removeBook();
     updateStatus();
 }
@@ -60,7 +67,7 @@ function removeBook() {
     const books = document.querySelectorAll('.title');
     books.forEach((book, i) => {
         book.addEventListener('click', e => {
-            if (confirm('Remove book?')) {
+            if (confirm(`Remove "${book.innerHTML}"?`)) {
                 myLibrary.splice(i, 1);
                 render();
             }
@@ -75,7 +82,7 @@ function updateStatus() {
     readingStatus.forEach((status, i) => {
         status.addEventListener('click', e => {
             myLibrary[i].changeStatus();
-            status.innerHTML = myLibrary[i].status;
+            status.innerHTML = `<span class="btn ${assignColor(myLibrary[i].status)}">${myLibrary[i].status}</span>`;
         })
     })
 }
@@ -87,6 +94,7 @@ myLibrary.push(new Book('random title 3', 'random author', '234', 'not-read'));
 myLibrary.push(new Book('random title 4', 'random author', '234', 'finished'));
 myLibrary.push(new Book('random title 5', 'random author', '234', 'not-read'));
 
+const newBtn = document.querySelector('#new');
 const form = document.querySelector('#form');
 const btn = document.querySelector('#btn');
 const title = document.querySelector('#title');
@@ -94,12 +102,18 @@ const author = document.querySelector('#author');
 const pages = document.querySelector('#pages');
 const isRead = document.querySelector('#status');
 const table = document.querySelector('#table');
+const formModal = document.querySelector('#form-modal');
+const close = document.querySelector('#close');
 
+newBtn.addEventListener('click', () => formModal.style.display = 'block')
 
-btn.addEventListener('click', e => {
+close.addEventListener('click', () => formModal.style.display = 'none')
+
+window.addEventListener('click', hideModal);
+
+btn.addEventListener('click', () => {
     addBookToLibrary();
     render();
-    console.log(isRead.options[isRead.selectedIndex].text);
 })
 
 
@@ -109,4 +123,34 @@ form.addEventListener('submit', e => {
 })
 
 
+function generateTableHead() {
+    const thead = document.createElement('thead');
+    thead.classList.add('thead-light');
+    const tr = document.createElement('tr');
+    const bookInfo = [title.id, author.id, pages.id, isRead.id];
+    for (let i = 0; i < bookInfo.length; i++) {
+        const th = document.createElement('th');
+        th.innerHTML = capitalize(bookInfo[i]);
+        tr.appendChild(th);
+    }
+    thead.appendChild(tr);
+    table.appendChild(thead);
+}
+
+
+function capitalize(word) {
+    return word[0].toUpperCase() + word.slice(1);
+}
+
+
+// return bootstrap class according to book status
+function assignColor(status) {
+    if (status.includes('Not')) return 'btn-danger';
+    else if (status.includes('Progress')) return 'btn-info';
+    return 'btn-success';
+}
+
+function hideModal(e) {
+    if (e.target == formModal) formModal.style.display = 'none';
+}
 

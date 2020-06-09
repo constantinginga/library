@@ -3,13 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/style.css">
     <title>Library App</title>
 </head>
 <body>
     <div id="header">
-        <img src="https://i.imgur.com/nmrcyou.jpg" alt="Image of a bookshelf" id="header-img">
+        <img src="images/bookshelf.jpg" alt="Image of a bookshelf" id="header-img">
     </div>
+    <button type="button" id="new" class="btn btn-light">+</button>
+    <p id="instructions"><span>Tip:</span> Click a book's <span>title</span> to remove it or its <span>status</span> to change it</p>
+    <table id="table" class="table">
+        
+    </table>
+    <div id="form-modal">
+        <div id="form-container">
+            <span id="close">&times;</span>
     <form action="" id="form">
     <input type="text" name="title" id="title" required>
     <input type="text" name="author" id="author" required>
@@ -20,11 +29,10 @@
         <option value="in-progress">In Progress</option>
         <option value="finished">Finished</option>
     </select>
-    <button type="submit" id="btn">Add new book</button>
+    <button type="submit" id="btn" class="btn btn-primary">Add</button>
 </form>
-    <table id="table">
-
-    </table>
+</div>
+</div>
     <script src="scripts/script.js"></script>
 </body>
 </html>
