@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Library App</title>
+</head>
+<body>
+    <div id="header">
+        <img src="https://i.imgur.com/nmrcyou.jpg" alt="Image of a bookshelf" id="header-img">
+    </div>
+    <form action="" id="form">
+    <input type="text" name="title" id="title" required>
+    <input type="text" name="author" id="author" required>
+    <input type="number" name="pages" id="pages" required>
+    <select name="status" id="status" required>
+        <option value="" selected disabled>Reading Status</option>
+        <option value="not-read">Not Read</option>
+        <option value="in-progress">In Progress</option>
+        <option value="finished">Finished</option>
+    </select>
+    <button type="submit" id="btn">Add new book</button>
+</form>
+    <table id="table">
+
+    </table>
+    <script src="scripts/script.js"></script>
+</body>
+</html>
