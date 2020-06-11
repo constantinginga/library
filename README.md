@@ -1,3 +1,4 @@
 # library
-JS Library App
+**JS Library App**
+
 *First time using Bootstrap, JS Objects and localStorage.*
