@@ -1,7 +1,7 @@
 # library
 **JS Library App**
 
-*First time using Bootstrap, JS Objects and localStorage.*\
+*Created with Bootstrap, JS Classes and localStorage.*\
 [Try it out!](https://constantinginga.github.io/library/)
 
 ![Image of the final result](https://i.imgur.com/G0b4Xl8.png)
