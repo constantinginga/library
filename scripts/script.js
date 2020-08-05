@@ -1,20 +1,20 @@
 let myLibrary = [];
 
 
-// book constructor
-function Book(title, author, pages, status) {
-    this.title = title;
-    this.author = author;
-    this.pages = +pages;
-    this.status = status;
-}
+class Book {
 
+    constructor(title, author, pages, status) {
+        this.title = title;
+        this.author = author;
+        this.pages = +pages;
+        this.status = status;
+    }
 
-// change reading status of a book
-Book.prototype.changeStatus = function() {
-    if (this.status === 'Not Read') this.status = 'In Progress';
-    else if (this.status === 'In Progress') this.status = 'Finished';
-    else if (this.status === 'Finished') this.status = 'Not Read';
+    changeStatus() {
+        if (this.status === 'Not Read') this.status = 'In Progress';
+        else if (this.status === 'In Progress') this.status = 'Finished';
+        else if (this.status === 'Finished') this.status = 'Not Read';
+    }
 }
 
 
