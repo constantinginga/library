@@ -105,7 +105,8 @@ const newBtn = document.querySelector('#new'),
   isRead = document.querySelector('#status'),
   table = document.querySelector('#table'),
   formModal = document.querySelector('#form-modal'),
-  close = document.querySelector('#close');
+  close = document.querySelector('#close'),
+  inputs = [title, author, pages];
 
 // show modal for adding a new book
 newBtn.addEventListener('click', () => {
@@ -135,15 +136,64 @@ form.addEventListener('submit', (e) => {
   }
 });
 
-// author input validation
-author.addEventListener('input', (e) => {
-  const error = document.querySelector('#author-error');
-  if (!author.validity.valid) {
-    showError();
-  } else error.innerHTML = '';
+inputs.forEach((input) => {
+  input.addEventListener('input', () => showError(input));
+  // prevent empty input
+  input.addEventListener('keypress', (e) => {
+    if (e.code === 'Space' && !e.target.value) e.preventDefault();
+  });
 });
 
-function showError() {}
+/* TO-DO:
+- prevent invalid form from being submitted
+*/
+function showError(input) {
+  let error = '',
+    VALUE_MISSING_ERROR = '',
+    TOO_SHORT_ERROR = '',
+    TOO_LONG_ERROR = '',
+    PATTERN_MISMATCH_ERROR = 'Please enter letters only';
+
+  switch (input.id) {
+    case 'title':
+      VALUE_MISSING_ERROR = 'Please enter a title';
+      TOO_SHORT_ERROR = 'Title length is too short';
+      error = document.querySelector('#title-error');
+      break;
+    case 'author':
+      VALUE_MISSING_ERROR = 'Please enter an author';
+      TOO_SHORT_ERROR = 'Author length is too short';
+      error = document.querySelector('#author-error');
+      break;
+    case 'pages':
+      VALUE_MISSING_ERROR = 'Please enter number of pages';
+      TOO_SHORT_ERROR = 'Page number must be greater than 0';
+      TOO_LONG_ERROR = 'Page number must be smaller';
+      error = document.querySelector('#page-error');
+  }
+
+  if (!input.validity.valid) {
+    error.classList.add('invalid-feedback');
+    input.classList.add('is-invalid');
+
+    if (input.validity.valueMissing) {
+      error.innerHTML = VALUE_MISSING_ERROR;
+    } else if (input.validity.patternMismatch) {
+      error.innerHTML = PATTERN_MISMATCH_ERROR;
+    } else if (input.validity.tooShort || input.validity.rangeUnderflow) {
+      error.innerHTML = TOO_SHORT_ERROR;
+    } else if (input.validity.tooLong) {
+      error.innerHTML = TOO_LONG_ERROR;
+    }
+  } else {
+    error.innerHTML = '';
+    error.classList.remove('invalid-feedback');
+    input.classList.remove('is-invalid');
+    input.classList.add('is-valid');
+  }
+}
+
+function preventInvalidInput(e) {}
 
 function generateTableHead() {
   const thead = document.createElement('thead');
@@ -178,8 +228,15 @@ function hideModal(e) {
 }
 
 function resetForm() {
-  form.classList.remove('was-validated');
+  const errors = document.querySelectorAll('.invalid-feedback');
   title.value = author.value = pages.value = isRead.value = '';
+  form.classList.remove('was-validated');
+  inputs.forEach((input) => input.classList.remove('is-valid', 'is-invalid'));
+  if (errors)
+    errors.forEach((err) => {
+      err.innerHTML = '';
+      err.classList.remove('invalid-feedback');
+    });
 }
 
 // store books in local Storage
