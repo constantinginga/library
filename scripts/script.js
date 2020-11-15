@@ -126,12 +126,20 @@ btn.addEventListener('click', () => {
 
 // prevent invalid form from being submitted
 form.addEventListener('submit', (e) => {
-  if (!(pages.validity.valid && title.validity.valid && author.validity.valid))
+  if (
+    !(
+      pages.validity.valid &&
+      title.validity.valid &&
+      author.validity.valid &&
+      isRead.validity.valid
+    )
+  )
     e.preventDefault();
 
   if (!title.validity.valid) showError(title);
   if (!pages.validity.valid) showError(pages);
   if (!author.validity.valid) showError(author);
+  if (!isRead.validity.valid) showError(isRead);
 });
 
 inputs.forEach((input) => {
@@ -142,6 +150,8 @@ inputs.forEach((input) => {
 
   input.addEventListener('input', () => showError(input));
 });
+
+isRead.addEventListener('input', () => showError(isRead));
 
 /* TO-DO:
 - add validation to select
@@ -170,6 +180,10 @@ function showError(input) {
       TOO_SHORT_ERROR = 'Page number must be greater than 0';
       TOO_LONG_ERROR = 'Page number must be smaller';
       error = document.querySelector('#page-error');
+      break;
+    case 'status':
+      VALUE_MISSING_ERROR = 'Please select the reading status';
+      error = document.querySelector('#status-error');
   }
 
   if (!input.validity.valid) {
@@ -230,6 +244,7 @@ function resetForm() {
   title.value = author.value = pages.value = isRead.value = '';
   form.classList.remove('was-validated');
   inputs.forEach((input) => input.classList.remove('is-valid', 'is-invalid'));
+  isRead.classList.remove('is-valid', 'is-invalid');
   if (errors)
     errors.forEach((err) => {
       err.innerHTML = '';
