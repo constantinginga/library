@@ -126,26 +126,25 @@ btn.addEventListener('click', () => {
 
 // prevent invalid form from being submitted
 form.addEventListener('submit', (e) => {
-  if (
-    !pages.validity.valid &&
-    !title.validity.valid &&
-    !author.validity.valid
-  ) {
-    showError();
+  if (!(pages.validity.valid && title.validity.valid && author.validity.valid))
     e.preventDefault();
-  }
+
+  if (!title.validity.valid) showError(title);
+  if (!pages.validity.valid) showError(pages);
+  if (!author.validity.valid) showError(author);
 });
 
 inputs.forEach((input) => {
-  input.addEventListener('input', () => showError(input));
   // prevent empty input
   input.addEventListener('keypress', (e) => {
     if (e.code === 'Space' && !e.target.value) e.preventDefault();
   });
+
+  input.addEventListener('input', () => showError(input));
 });
 
 /* TO-DO:
-- prevent invalid form from being submitted
+- add validation to select
 */
 function showError(input) {
   let error = '',
@@ -154,6 +153,7 @@ function showError(input) {
     TOO_LONG_ERROR = '',
     PATTERN_MISMATCH_ERROR = 'Please enter letters only';
 
+  // create custom messages
   switch (input.id) {
     case 'title':
       VALUE_MISSING_ERROR = 'Please enter a title';
@@ -192,8 +192,6 @@ function showError(input) {
     input.classList.add('is-valid');
   }
 }
-
-function preventInvalidInput(e) {}
 
 function generateTableHead() {
   const thead = document.createElement('thead');
