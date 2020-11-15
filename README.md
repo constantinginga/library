@@ -1,6 +1,6 @@
 # Library App
 
-> Built with Bootstrap, JS Classes and localStorage.
+> Built with Bootstrap, JavaScript and localStorage.
 
 [Live Demo](https://constantinginga.github.io/library/)
 
