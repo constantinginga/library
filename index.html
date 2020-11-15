@@ -41,10 +41,10 @@
             required
             placeholder="Title"
             class="form-control"
+            pattern="^[a-zA-Z-'\s]*$"
+            minlength="2"
           />
-          <div class="invalid-feedback" id="title-error">
-            Please choose a title.
-          </div>
+          <div id="title-error"></div>
           <input
             type="text"
             name="author"
@@ -52,29 +52,28 @@
             required
             placeholder="Author"
             class="form-control"
+            pattern="^[a-zA-Z-'\s]*$"
+            minlength="2"
           />
-          <div class="invalid-feedback" id="author-error">
-            Please choose an author.
-          </div>
+          <div id="author-error"></div>
           <input
             type="number"
             name="pages"
             id="pages"
             min="1"
+            max="100000"
             required
             placeholder="Pages"
             class="form-control"
           />
-          <div class="invalid-feedback" id="page-error">
-            Please provide the page number.
-          </div>
+          <div id="page-error"></div>
           <select name="status" id="status" required class="form-control">
             <option value="" selected disabled>Reading Status</option>
             <option value="not-read">Not Read</option>
             <option value="in-progress">In Progress</option>
             <option value="finished">Finished</option>
           </select>
-          <div class="invalid-feedback">Please choose the reading status.</div>
+          <div id="status-error"></div>
           <button type="submit" id="btn" class="btn btn-primary">Add</button>
         </form>
       </div>
